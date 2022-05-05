@@ -1,17 +1,17 @@
+from itertools import permutations
+import re
+
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
         #first make different combinations of given words
-        perm_list = self.findPermutations(words)
+        perm_list = list(map("".join,permutations(words)))
         outList = []
-        for word in perm_list:
-            matchIndex = s.find(word)
-            if(matchIndex != -1):
-                outList.append(matchIndex)
-        return outList
         
-    def findPermutations(self,words):
-        from itertools import permutations
-        return list(map("".join,permutations(words)))
+        for word in perm_list:
+            for m in re.finditer(word, s):
+                #print(word+' found', m.start(), m.end())
+                outList.append(m.start())
+        return set(outList) #returns unique list
 
 s = "barfoothefoobarman"
 words =  ["foo","bar"]
