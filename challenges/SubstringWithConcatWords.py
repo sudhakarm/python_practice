@@ -1,5 +1,4 @@
 from itertools import permutations
-import re
 
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
@@ -8,9 +7,13 @@ class Solution:
         outList = []
         
         for word in perm_list:
-            for m in re.finditer(word, s):
-                #print(word+' found', m.start(), m.end())
-                outList.append(m.start())
+            index=0
+            while index < len(s):
+                index = s.find(word, index)
+                if index == -1:
+                    break
+                outList.append(index)
+                index += 1    
         return set(outList) #returns unique list
 
 s = "barfoothefoobarman"
